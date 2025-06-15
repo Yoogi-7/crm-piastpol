@@ -1,0 +1,50 @@
+# === Python (Django backend) ===
+venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+db.sqlite3
+
+# Django media & static files (jeżeli używasz lokalnie)
+media/
+staticfiles/
+
+# Django secret keys (jeżeli przechowujesz w plikach)
+.env
+
+# === Node.js (frontend React) ===
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# === Systemowe ===
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# === Vite cache ===
+frontend/.vite/
+
+# === VSCode / IDE ===
+.vscode/
+.idea/
+
+# === Logs ===
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
