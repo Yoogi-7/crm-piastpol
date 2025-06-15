@@ -24,8 +24,9 @@ const Login = () => {
         {error && <div className="mb-4 text-red-600">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block mb-1">Username</label>
+            <label htmlFor="username" className="block mb-1">Username</label>
             <input
+              id="username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -33,8 +34,9 @@ const Login = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block mb-1">Password</label>
+            <label htmlFor="password" className="block mb-1">Password</label>
             <input
+              id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
