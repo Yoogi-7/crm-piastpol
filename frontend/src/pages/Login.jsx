@@ -10,21 +10,22 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await API.post('token/', { username, password });
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('access', response.data.access);
+      localStorage.setItem('refresh', response.data.refresh);
       window.location.href = '/dashboard';
     } catch (err) {
-      setError('Błędny login lub hasło');
+      setError('Invalid username or password');
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-        <h1 className="text-2xl mb-6 font-bold text-center">CRM Piastpol - Logowanie</h1>
+        <h1 className="text-2xl mb-6 font-bold text-center">CRM Piastpol - Login</h1>
         {error && <div className="mb-4 text-red-600">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block mb-1">Login</label>
+            <label className="block mb-1">Username</label>
             <input
               type="text"
               value={username}
@@ -33,7 +34,7 @@ const Login = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block mb-1">Hasło</label>
+            <label className="block mb-1">Password</label>
             <input
               type="password"
               value={password}
@@ -42,7 +43,7 @@ const Login = () => {
             />
           </div>
           <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Zaloguj
+            Log in
           </button>
         </form>
       </div>
