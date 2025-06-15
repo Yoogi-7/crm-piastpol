@@ -26,7 +26,7 @@ const Dashboard = () => {
     return <div className="p-8">Loading...</div>;
   }
 
-  const client = profile.client_info;
+  const client = profile.client_info || {};
 
   return (
     <div className="p-8">
@@ -37,10 +37,16 @@ const Dashboard = () => {
 
       <div className="bg-white p-6 rounded shadow mb-6">
         <h2 className="text-xl font-semibold mb-4">Client Info</h2>
-        <p><strong>Name:</strong> {client.name}</p>
-        <p><strong>NIP:</strong> {client.nip}</p>
-        <p><strong>Email:</strong> {client.email}</p>
-        <p><strong>Phone:</strong> {client.phone}</p>
+        {profile.role === 'client' ? (
+          <>
+            <p><strong>Name:</strong> {client.name}</p>
+            <p><strong>NIP:</strong> {client.nip}</p>
+            <p><strong>Email:</strong> {client.email}</p>
+            <p><strong>Phone:</strong> {client.phone}</p>
+          </>
+        ) : (
+          <p>This is not a client account.</p>
+        )}
       </div>
 
       <div className="bg-white p-6 rounded shadow">
