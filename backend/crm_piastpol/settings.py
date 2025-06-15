@@ -66,15 +66,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'crm_piastpol.wsgi.application'
 
-# Baza danych - Twój PostgreSQL
+# Baza danych SQLite na dev
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crm_piastpol',
-        'USER': 'postgres',
-        'PASSWORD': 'twoje_haslo',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -90,9 +86,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'pl'
-
 TIME_ZONE = 'Europe/Warsaw'
-
 USE_I18N = True
 USE_TZ = True
 
