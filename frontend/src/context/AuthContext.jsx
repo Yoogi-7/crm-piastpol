@@ -1,13 +1,13 @@
 import React, { createContext, useState, useEffect } from 'react';
 import API from '../api/api';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const access = localStorage.getItem('access');
-    return access ? jwt_decode(access) : null;
+    return access ? jwtDecode(access) : null;
   });
 
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     const response = await API.post('token/', { username, password });
     localStorage.setItem('access', response.data.access);
     localStorage.setItem('refresh', response.data.refresh);
-    setUser(jwt_decode(response.data.access));
+    setUser(jwtDecode(response.data.access));
   };
 
   const logout = () => {
