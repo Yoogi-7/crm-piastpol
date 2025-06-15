@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import API from '../api/api';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await API.post('token/', { username, password });
-      localStorage.setItem('access', response.data.access);
-      localStorage.setItem('refresh', response.data.refresh);
+      await login(username, password);
       window.location.href = '/dashboard';
     } catch (err) {
       setError('Invalid username or password');
