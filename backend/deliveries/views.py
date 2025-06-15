@@ -1,20 +1,20 @@
 from rest_framework import viewsets, permissions
-from rest_framework.response import Response
-from rest_framework.decorators import action
-from .models import User
-from .serializers import UserSerializer
-from clients.models import Client
-from clients.serializers import ClientSerializer
+from .models import Delivery, AdditionalProduct
+from .serializers import DeliverySerializer, AdditionalProductSerializer
+from users.models import User
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class AdditionalProductViewSet(viewsets.ModelViewSet):
+    queryset = AdditionalProduct.objects.all()
+    serializer_class = AdditionalProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    @action(detail=False, methods=['get'], permission_classes=[permissions.IsAuthenticated], name='user-profile')
-    def profile(self, request):
-        user = request.user
-        data = UserSerializer(user).data
+class DeliveryViewSet(viewsets.ModelViewSet):
+    queryset = Delivery.objects.all()
+    serializer_class = DeliverySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
         if user.role == 'client' and user.client:
-            client_data = ClientSerializer(user.client).data
-            data['client_info'] = client_data
-        return Response(data)
+            return Delivery.objects.filter(client=user.client)
+        return Delivery.objects.all()
