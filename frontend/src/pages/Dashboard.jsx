@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
   const [profile, setProfile] = useState(null);
+  const [deliveries, setDeliveries] = useState([]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -19,7 +20,20 @@ const Dashboard = () => {
       }
     };
 
+    const fetchDeliveries = async () => {
+      try {
+        const token = localStorage.getItem('access');
+        const response = await API.get('deliveries/', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setDeliveries(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     fetchProfile();
+    fetchDeliveries();
   }, []);
 
   if (!profile) {
@@ -50,10 +64,27 @@ const Dashboard = () => {
       </div>
 
       <div className="bg-white p-6 rounded shadow">
-        <h2 className="text-xl font-semibold mb-4">Delivery Info (mock data)</h2>
-        <p>Full bottles: 12</p>
-        <p>Dispensers: 4</p>
-        <p>Last delivery: 2025-06-14</p>
+        <h2 className="text-xl font-semibold mb-4">Deliveries</h2>
+        {deliveries.length > 0 ? (
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b">
+                <th className="text-left p-2">Date</th>
+                <th className="text-left p-2">Driver</th>
+              </tr>
+            </thead>
+            <tbody>
+              {deliveries.map(delivery => (
+                <tr key={delivery.id} className="border-b">
+                  <td className="p-2">{delivery.delivery_date}</td>
+                  <td className="p-2">{delivery.driver}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No deliveries found.</p>
+        )}
       </div>
     </div>
   );
