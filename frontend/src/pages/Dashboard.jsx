@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import API from '../api/api';
 import { AuthContext } from '../context/AuthContext';
 
@@ -76,7 +77,11 @@ const Dashboard = () => {
             <tbody>
               {deliveries.map(delivery => (
                 <tr key={delivery.id} className="border-b">
-                  <td className="p-2">{delivery.delivery_date}</td>
+                  <td className="p-2">
+                    <Link to={`/delivery/${delivery.id}`} className="text-blue-600 hover:underline">
+                      {delivery.delivery_date}
+                    </Link>
+                  </td>
                   <td className="p-2">{delivery.driver}</td>
                 </tr>
               ))}
